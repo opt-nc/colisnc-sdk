@@ -1,12 +1,13 @@
 [![](https://jitpack.io/v/opt-nc/colisnc-sdk.svg)](https://jitpack.io/#opt-nc/colisnc-sdk)
 
-# colisnc-sdk
-SDK pour les colis en Nouvelle-calédonie
+# :grey_question:colisnc-sdk
 
-# Utiliser
+SDK Java pour suivre suivre les colis en Nouvelle-calédonie, se base sur les données de [la page de suivi des envois de OPT-NC](https://webtracking-nca.ptc.post/).
+
+# :point_right:Utiliser
 
 
-## Ajout de la dépendance (maven)
+## :heavy_check_mark:Ajout de la dépendance `maven`
 
 ```xml
 <repositories>
@@ -29,7 +30,7 @@ puis :
 
 
 
-## Ajout de la dépendance (gradle)
+## :heavy_check_mark:Ajout de la dépendance `gradle`
 
 ```yaml
 allprojects {
@@ -48,7 +49,7 @@ dependencies {
 }
 ```
 
-## Code snippet
+## :rocket:Code snippet
 
 
 ```java
