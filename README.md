@@ -1,3 +1,5 @@
+[![](https://jitpack.io/v/opt-nc/colisnc-sdk.svg)](https://jitpack.io/#opt-nc/colisnc-sdk)
+
 # colisnc-sdk
 SDK pour les colis en Nouvelle-calédonie
 
@@ -19,7 +21,7 @@ puis :
 
 ```xml
 <dependency>
-    <groupId>com.github.adriens</groupId>
+    <groupId>com.github.opt-nc</groupId>
     <artifactId>colisnc-sdk</artifactId>
     <version>Tag</version>
 </dependency>
@@ -42,7 +44,7 @@ puis :
 
 ```yaml
 dependencies {
-    implementation 'com.github.adriens:colisnc-sdk:Tag'
+    implementation 'com.github.opt-nc:Tag'
 }
 ```
 
