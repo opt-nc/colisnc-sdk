@@ -7,6 +7,27 @@ SDK Java pour suivre suivre les colis en Nouvelle-calédonie, se base sur les do
 # :point_right:Utiliser
 
 
+## 🚀(J)Bang! sur les colis !
+
+Pour une expérience optimale depuis le votre shell qui vous permettra de trouver
+le dernier status d'un colis.
+
+```shell
+jbang alias add --name colis-nc https://github.com/opt-nc/colisnc-sdk/blob/master/jbang.java
+# Check des alias
+jbang alias list
+# Appel de excuses
+jbang colis-nc -c 8Z00136833343
+```
+
+Pour récupérer rester à jour et **toujours disposer des meilleures excuses** soumises par la communauté,
+mettre à jour le cache :
+
+```shell
+jbang cache clear
+jbang excuses -c boulot
+```
+
 ## :heavy_check_mark:Ajout de la dépendance `maven`
 
 ```xml
@@ -50,7 +71,6 @@ dependencies {
 ```
 
 ## :rocket:Code snippet
-
 
 ```java
 ArrayList<ColisDataRow> coliadDetails = ColisCrawler.getColisRows(itemId);
