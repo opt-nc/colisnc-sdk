@@ -20,12 +20,10 @@ jbang alias list
 jbang colis-nc -c 8Z00136833343
 ```
 
-Pour récupérer rester à jour et **toujours disposer des meilleures excuses** soumises par la communauté,
-mettre à jour le cache :
+Pour mettre à jour le cache Jbang (et récupérer la toute dernière version) :
 
 ```shell
 jbang cache clear
-jbang excuses -c boulot
 ```
 
 ## :heavy_check_mark:Ajout de la dépendance `maven`
