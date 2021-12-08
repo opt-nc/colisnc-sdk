@@ -1,0 +1,54 @@
+# This workflow will build a Java project with Maven
+# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
+name: Build
+
+on: 
+  push:
+  schedule:
+    - cron: '* 0 * * *' # permet de vérifier que la page web n'a pas changé en jouant les TU tous les soirs
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java: ['8', '11', '17']
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK ${{ matrix.Java }}
+        uses: actions/setup-java@v2
+        with:
+          java-version: ${{ matrix.Java }}
+          distribution: 'adopt'
+          cache: 'maven'
+
+      - name: Build with Maven
+        run: mvn -B verify
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  conventional-commits-versionning-and-docker:
+    needs: [build]
+    if: github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/')
+    name: Bump version and create release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK 8
+        uses: actions/setup-java@v2
+        with:
+          java-version: 8
+          distribution: 'adopt'
+          cache: 'maven'
+      - name: Install NodeJS
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14.x
+      - name: Install Semantic release and maven-semantic-release plugin
+        run: |
+          npm install -g semantic-release \
+          @conveyal/maven-semantic-release @semantic-release/git
+      - name: Run semantic release to bump version and create release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx semantic-release --skip-maven-deploy --use-conveyal-workflow
