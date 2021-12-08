@@ -19,7 +19,7 @@
         <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
         
         <!-- dépendance JAXB -->
-        <jaxb-core.version>2.3.0.1</jaxb-core.version>
+        <jaxb-core.version>3.0.2</jaxb-core.version>
         <jaxb-impl.version>2.3.3</jaxb-impl.version>
         
         <!-- dépendance jacoco -->
