@@ -10,7 +10,7 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         
-        <logback.version>1.2.7</logback.version>
+        <logback.version>1.2.10</logback.version>
         <htmlunit.version>2.53.0</htmlunit.version>
         <junit.version>4.13.2</junit.version>
         <!-- Plugin -->
@@ -73,7 +73,8 @@
                 <artifactId>maven-shade-plugin</artifactId>
                 <version>${maven-shade-plugin.version}</version>
                 <configuration>
-          
+                    <shadedArtifactAttached>true</shadedArtifactAttached>
+                    <shadedClassifierName>standalone</shadedClassifierName> <!-- Any name that makes sense -->
                 </configuration>
                 <executions>
                     <execution>
