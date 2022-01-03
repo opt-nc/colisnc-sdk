@@ -73,7 +73,8 @@
                 <artifactId>maven-shade-plugin</artifactId>
                 <version>${maven-shade-plugin.version}</version>
                 <configuration>
-          
+                    <shadedArtifactAttached>true</shadedArtifactAttached>
+                    <shadedClassifierName>standalone</shadedClassifierName> <!-- Any name that makes sense -->
                 </configuration>
                 <executions>
                     <execution>
