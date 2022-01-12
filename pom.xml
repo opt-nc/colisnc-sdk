@@ -16,7 +16,7 @@
         <!-- Plugin -->
         <!-- Plugins versions -->
         <maven-shade-plugin.version>3.2.4</maven-shade-plugin.version>
-        <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
+        <maven-jar-plugin.version>3.2.2</maven-jar-plugin.version>
         
         <!-- dépendance JAXB -->
         <jaxb-core.version>2.3.0.1</jaxb-core.version>
