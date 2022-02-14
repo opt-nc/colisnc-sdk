@@ -11,12 +11,12 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         
         <logback.version>1.2.10</logback.version>
-        <htmlunit.version>2.53.0</htmlunit.version>
+        <htmlunit.version>2.58.0</htmlunit.version>
         <junit.version>4.13.2</junit.version>
         <!-- Plugin -->
         <!-- Plugins versions -->
         <maven-shade-plugin.version>3.2.4</maven-shade-plugin.version>
-        <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
+        <maven-jar-plugin.version>3.2.2</maven-jar-plugin.version>
         
         <!-- dépendance JAXB -->
         <jaxb-core.version>2.3.0.1</jaxb-core.version>
