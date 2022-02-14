@@ -3,24 +3,24 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.adriens.github.colisnc</groupId>
     <artifactId>ColisNcSDK</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.18.2-SNAPSHOT</version>
     <packaging>jar</packaging>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         
-        <logback.version>1.2.6</logback.version>
-        <htmlunit.version>2.53.0</htmlunit.version>
+        <logback.version>1.2.10</logback.version>
+        <htmlunit.version>2.58.0</htmlunit.version>
         <junit.version>4.13.2</junit.version>
         <!-- Plugin -->
         <!-- Plugins versions -->
         <maven-shade-plugin.version>3.2.4</maven-shade-plugin.version>
-        <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
+        <maven-jar-plugin.version>3.2.2</maven-jar-plugin.version>
         
         <!-- dépendance JAXB -->
         <jaxb-core.version>3.0.2</jaxb-core.version>
-        <jaxb-impl.version>2.3.3</jaxb-impl.version>
+        <jaxb-impl.version>3.0.2</jaxb-impl.version>
         
         <!-- dépendance jacoco -->
         <jacoco-maven-plugin.version>0.8.7</jacoco-maven-plugin.version>
@@ -73,7 +73,8 @@
                 <artifactId>maven-shade-plugin</artifactId>
                 <version>${maven-shade-plugin.version}</version>
                 <configuration>
-          
+                    <shadedArtifactAttached>true</shadedArtifactAttached>
+                    <shadedClassifierName>standalone</shadedClassifierName> <!-- Any name that makes sense -->
                 </configuration>
                 <executions>
                     <execution>
