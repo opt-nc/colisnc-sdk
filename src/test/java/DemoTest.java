@@ -4,6 +4,18 @@
  * and open the template in the editor.
  */
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
+
 import com.adriens.github.colisnc.colisnc.ColisCrawler;
 import com.adriens.github.colisnc.colisnc.ColisDataRow;
 import com.adriens.github.colisnc.countries.Country;
@@ -11,14 +23,7 @@ import com.adriens.github.colisnc.countries.ListCountriesDefinedLanguage;
 import com.adriens.github.colisnc.localisation.Localisation;
 import com.adriens.github.colisnc.localisation.Localisations;
 
-import java.util.*;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
 import org.apache.commons.lang3.StringUtils;
-
-import static org.junit.Assert.*;
 import org.junit.Test;
 
 /**
@@ -92,7 +97,7 @@ public class DemoTest {
         
         try {
             
-            ArrayList<ColisDataRow> coliadDetails = ColisCrawler.getColisRows(itemId);
+            List<ColisDataRow> coliadDetails = ColisCrawler.getColisRows(itemId);
             assertNotNull("we must find rows", coliadDetails);
             
             System.out.println("Got <" + coliadDetails.size() + "> details pour <" + itemId + ">");
