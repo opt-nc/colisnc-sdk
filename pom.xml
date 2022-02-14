@@ -7,42 +7,55 @@
     <packaging>jar</packaging>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        
+        <maven.compiler.source>1.8</maven.compiler.source>
+
         <logback.version>1.2.10</logback.version>
-        <htmlunit.version>2.53.0</htmlunit.version>
+        <htmlunit.version>2.58.0</htmlunit.version>
         <junit.version>4.13.2</junit.version>
         <!-- Plugin -->
         <!-- Plugins versions -->
         <maven-shade-plugin.version>3.2.4</maven-shade-plugin.version>
-        <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
-        
+        <maven-jar-plugin.version>3.2.2</maven-jar-plugin.version>
+
         <!-- dépendance JAXB -->
-        <jaxb-core.version>2.3.0.1</jaxb-core.version>
-        <jaxb-impl.version>2.3.3</jaxb-impl.version>
-        
+        <jaxb-core.version>3.0.2</jaxb-core.version>
+        <jaxb-impl.version>3.0.2</jaxb-impl.version>
+
         <!-- dépendance jacoco -->
         <jacoco-maven-plugin.version>0.8.7</jacoco-maven-plugin.version>
     </properties>
-    
+
     <dependencies>
         <dependency>
             <groupId>net.sourceforge.htmlunit</groupId>
             <artifactId>htmlunit</artifactId>
             <version>${htmlunit.version}</version>
         </dependency>
-   
+
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-core</artifactId>
             <version>${logback.version}</version>
         </dependency>
-        
+
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
             <version>${logback.version}</version>
+        </dependency>
+
+        <!-- XML serialization -->
+        <dependency>
+            <groupId>jakarta.xml.bind</groupId>
+            <artifactId>jakarta.xml.bind-api</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-impl</artifactId>
+            <version>3.0.0</version>
+            <scope>runtime</scope>
         </dependency>
 
         <dependency>
@@ -51,21 +64,8 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
-        
-
-        <!-- XML serialization -->
-        <dependency>
-            <groupId>com.sun.xml.bind</groupId>
-            <artifactId>jaxb-core</artifactId>
-            <version>${jaxb-core.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.sun.xml.bind</groupId>
-            <artifactId>jaxb-impl</artifactId>
-            <version>${jaxb-impl.version}</version>
-        </dependency>
     </dependencies>
-    
+
     <build>
         <plugins>
             <plugin>
@@ -98,7 +98,7 @@
                     </archive>
                 </configuration>
             </plugin>
-            
+
             <!-- Java Code Coverage -->
             <plugin>
                 <groupId>org.jacoco</groupId>
