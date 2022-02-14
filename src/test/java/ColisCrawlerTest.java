@@ -4,15 +4,19 @@
  * and open the template in the editor.
  */
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import com.adriens.github.colisnc.colisnc.ColisCrawler;
 import com.adriens.github.colisnc.colisnc.ColisDataRow;
-
 import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
-
-import java.util.*;
-import static org.junit.Assert.*;
 
 import org.junit.Test;
 
@@ -31,7 +35,7 @@ public class ColisCrawlerTest {
             webClient.getOptions().setDownloadImages(false);
             HtmlPage thePage = webClient.getPage(ColisCrawler.BASE_URL);
             
-            assertTrue("You can access the page ", thePage.asText().contains("Suivi de Votre Envoi"));
+            assertTrue("You can access the page ", thePage.asNormalizedText().contains("Suivi de Votre Envoi"));
             
         } catch (Exception ex) {
             
@@ -43,7 +47,7 @@ public class ColisCrawlerTest {
     public void testGetLatestStatusForColisListNullColisListe() {
         try {
 
-            ArrayList<ColisDataRow> colisList = ColisCrawler.getLatestStatusForColisList(null);
+            List<ColisDataRow> colisList = ColisCrawler.getLatestStatusForColisList(null);
             assertNull("on null, null, ", colisList);
 
         } catch (Exception ex) {
@@ -57,7 +61,7 @@ public class ColisCrawlerTest {
         try {
 
             List<String> colisListe = new ArrayList<>();
-            ArrayList<ColisDataRow> colisList = ColisCrawler.getLatestStatusForColisList(colisListe);
+            List<ColisDataRow> colisList = ColisCrawler.getLatestStatusForColisList(colisListe);
             assertTrue("On empty list, no rows", colisList.isEmpty());
 
         } catch (Exception ex) {
@@ -71,7 +75,7 @@ public class ColisCrawlerTest {
         try {
 
             List<String> colisListe = Arrays.asList(new String[]{"8Z00136833343"});
-            ArrayList<ColisDataRow> colisList = ColisCrawler.getLatestStatusForColisList(colisListe);
+            List<ColisDataRow> colisList = ColisCrawler.getLatestStatusForColisList(colisListe);
             assertTrue("latest row for colisListe", colisList.size() == 1);
 
         } catch (Exception ex) {
@@ -85,7 +89,7 @@ public class ColisCrawlerTest {
         try {
 
             List<String> colisListe = Arrays.asList(new String[]{"8Z00136833343", "8Z00136833343", "8Z00136833343"});
-            ArrayList<ColisDataRow> colisList = ColisCrawler.getLatestStatusForColisList(colisListe);
+            List<ColisDataRow> colisList = ColisCrawler.getLatestStatusForColisList(colisListe);
             assertTrue("3 latest row for the 3 colisListe", colisList.size() == 3);
 
         } catch (Exception ex) {
@@ -99,7 +103,7 @@ public class ColisCrawlerTest {
         try {
 
             String itemId = "";
-            ArrayList<ColisDataRow> colisList = ColisCrawler.getColisRows(itemId);
+            List<ColisDataRow> colisList = ColisCrawler.getColisRows(itemId);
             assertTrue("no rows for empty itemId", colisList.isEmpty());
 
         } catch (Exception ex) {
@@ -114,7 +118,7 @@ public class ColisCrawlerTest {
         try {
 
             String itemId = null;
-            ArrayList<ColisDataRow> colisList = ColisCrawler.getColisRows(itemId);
+            List<ColisDataRow> colisList = ColisCrawler.getColisRows(itemId);
             assertTrue("no rows for null itemId", colisList.isEmpty());
 
         } catch (Exception ex) {
@@ -128,7 +132,7 @@ public class ColisCrawlerTest {
         try {
 
             String itemId = "8Z00136833343";
-            ArrayList<ColisDataRow> colisList = ColisCrawler.getColisRows(itemId);
+            List<ColisDataRow> colisList = ColisCrawler.getColisRows(itemId);
             assertTrue("on itemId \"8Z00136833343\", there're 7 rows", colisList.size() == 8);
 
         } catch (Exception ex) {
@@ -142,7 +146,7 @@ public class ColisCrawlerTest {
         try {
 
             String itemId = "XX";
-            ArrayList<ColisDataRow> colisList = ColisCrawler.getColisRows(itemId);
+            List<ColisDataRow> colisList = ColisCrawler.getColisRows(itemId);
             assertTrue("on bad itemId, empty colisList", colisList.isEmpty());
 
         } catch (Exception ex) {
@@ -198,7 +202,7 @@ public class ColisCrawlerTest {
         try {
 
             String itemId = "8Z00136833343";
-            ArrayList<ColisDataRow> lList = ColisCrawler.getColisRows(itemId);
+            List<ColisDataRow> lList = ColisCrawler.getColisRows(itemId);
             ColisDataRow latestRow = lList.get(0);
             ColisDataRow result = ColisCrawler.getLatest(itemId);
             assertEquals(result.getItemId(), latestRow.getItemId());
@@ -256,7 +260,7 @@ public class ColisCrawlerTest {
         try {
 
             String itemId = "8Z00136833343";
-            ArrayList<ColisDataRow> lList = ColisCrawler.getColisRows(itemId);
+            List<ColisDataRow> lList = ColisCrawler.getColisRows(itemId);
             ColisDataRow oldestRow = lList.get(lList.size() - 1);
             ColisDataRow result = ColisCrawler.getOldest(itemId);
             assertEquals(result.getItemId(), oldestRow.getItemId());
