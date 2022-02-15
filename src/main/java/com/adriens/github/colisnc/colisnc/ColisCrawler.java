@@ -8,19 +8,18 @@ package com.adriens.github.colisnc.colisnc;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
 import com.adriens.github.colisnc.countries.ListCountriesDefinedLanguage;
 import com.adriens.github.colisnc.localisation.Localisation;
 import com.adriens.github.colisnc.localisation.Localisations;
-import com.gargoylesoftware.htmlunit.BrowserVersion;
-import com.gargoylesoftware.htmlunit.WebClient;
-import com.gargoylesoftware.htmlunit.html.HtmlPage;
-import com.gargoylesoftware.htmlunit.html.HtmlTable;
-import com.gargoylesoftware.htmlunit.html.HtmlTableBody;
-import com.gargoylesoftware.htmlunit.html.HtmlTableRow;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -72,13 +71,6 @@ public class ColisCrawler {
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/uuuu HH:mm:ss");
     private static final Logger logger = LoggerFactory.getLogger(ColisCrawler.class);
 
-    private static WebClient buildWebClient() {
-        WebClient webClient = new WebClient(BrowserVersion.BEST_SUPPORTED);
-        webClient.getOptions().setJavaScriptEnabled(false);
-        webClient.getOptions().setDownloadImages(false);
-        return webClient;
-    }
-
     /**
      * Return a list of the latests rows for the parcel number in parameter.
      * 
@@ -125,74 +117,68 @@ public class ColisCrawler {
      *
      */
     public static final List<ColisDataRow> getColisRows(String itemId) throws Exception {
-        WebClient webClient = buildWebClient();
-        ArrayList<ColisDataRow> rows;
-        rows = new ArrayList<>();
-        if (itemId == null) {
-            return rows;
+        if (itemId == null || itemId.isEmpty()) {
+            return Collections.emptyList();
         }
-        if (itemId.isEmpty()) {
-            return rows;
-        }
-        HtmlPage rowsPage = webClient
-                .getPage(ColisCrawler.BASE_URL + ColisCrawler.QUERY + itemId + "&Submit=Nouvelle+recherche");
-        if (rowsPage.asNormalizedText().contains(NO_ROWS_MESSAGE)) {
+
+        Document doc = Jsoup.connect(ColisCrawler.BASE_URL + ColisCrawler.QUERY + itemId + "&Submit=Nouvelle+recherche")
+                .get();
+        if (doc.text().contains(NO_ROWS_MESSAGE)) {
             logger.warn("Le colis demandé <{}> est introuvable...", itemId);
-            return rows;
+            return Collections.emptyList();
         }
+
         // get the table
-        HtmlTable rowsTable = (HtmlTable) rowsPage.getElementsByTagName("table").get(0);
-        for (final HtmlTableBody body : rowsTable.getBodies()) {
-            final List<HtmlTableRow> tableRows = body.getRows();
-            logger.debug("Rows found : {}", rows.size());
-            // now fetch each row
-            Iterator<HtmlTableRow> rowIter = tableRows.iterator();
+        List<ColisDataRow> result = new ArrayList<>();
+        Elements rows = doc.select("table tr");
+        logger.debug("Rows found : {}", rows.size());
+        for (Element theRow : rows) {
+            ColisDataRow colisRow = new ColisDataRow();
 
-            while (rowIter.hasNext()) {
-                ColisDataRow colisRow = new ColisDataRow();
-                HtmlTableRow theRow = rowIter.next();
-
-                String rawDateHeure = theRow.getCell(1).asNormalizedText();
-                String pays = theRow.getCell(2).asNormalizedText();
-                String localisation = theRow.getCell(3).asNormalizedText();
-                String typeEvenement = theRow.getCell(4).asNormalizedText();
-                String informations = theRow.getCell(5).asNormalizedText();
-
-                LocalDateTime localDateTime = LocalDateTime.parse(rawDateHeure, formatter);
-                Localisation geolocalized = Localisations.locate(localisation);
-
-                colisRow.setItemId(itemId);
-                colisRow.setRawDateHeure(rawDateHeure);
-                ;
-                colisRow.setPays(pays);
-                colisRow.setLocalisation(localisation);
-                colisRow.setTypeEvenement(typeEvenement);
-                colisRow.setInformations(informations);
-                colisRow.setDate(localDateTime);
-                colisRow.setStatus();
-                colisRow.setCountry(ListCountriesDefinedLanguage.getCountry(pays));
-                colisRow.setLocalization(geolocalized);
-                rows.add(colisRow);
-
-                logger.debug("RAW LINE : <" + theRow.asNormalizedText() + ">");
-                logger.info("raw dateHeure : <" + rawDateHeure + ">");
-                logger.info("Local DateTime: <" + localDateTime + ">");
-
-                logger.info("pays : <" + pays + ">");
-                logger.info("localisation : <" + localisation + ">");
-                logger.info("typeEvenement : <" + typeEvenement + ">");
-                logger.info("informations : <" + informations + ">");
-                logger.info("localization : <" + geolocalized + ">");
-                logger.info("---------------------------------------------------");
-                // lTransaction = new Transaction(convertFromTextDate(dateAsString), libele,
-                // extractSolde(debitAsString), extractSolde(credititAsString));
-                // getTransactions().add(lTransaction);
-                // logger.debug("Added new transaction : " + lTransaction.toString());
+            Elements cells = theRow.getElementsByTag("td");
+            if (cells.isEmpty()) {
+                continue; // header ?
             }
+            String rawDateHeure = cells.get(1).text();
+            String pays = cells.get(2).text();
+            String localisation = cells.get(3).text();
+            String typeEvenement = cells.get(4).text();
+            String informations = cells.get(5).text();
+
+            LocalDateTime localDateTime = LocalDateTime.parse(rawDateHeure, formatter);
+            Localisation geolocalized = Localisations.locate(localisation);
+
+            colisRow.setItemId(itemId);
+            colisRow.setRawDateHeure(rawDateHeure);
+            colisRow.setPays(pays);
+            colisRow.setLocalisation(localisation);
+            colisRow.setTypeEvenement(typeEvenement);
+            colisRow.setInformations(informations);
+            colisRow.setDate(localDateTime);
+            colisRow.setStatus();
+            colisRow.setCountry(ListCountriesDefinedLanguage.getCountry(pays));
+            colisRow.setLocalization(geolocalized);
+            result.add(colisRow);
+
+            logger.debug("RAW LINE : <" + theRow.text() + ">");
+            logger.info("raw dateHeure : <" + rawDateHeure + ">");
+            logger.info("Local DateTime: <" + localDateTime + ">");
+
+            logger.info("pays : <" + pays + ">");
+            logger.info("localisation : <" + localisation + ">");
+            logger.info("typeEvenement : <" + typeEvenement + ">");
+            logger.info("informations : <" + informations + ">");
+            logger.info("localization : <" + geolocalized + ">");
+            logger.info("---------------------------------------------------");
+            // lTransaction = new Transaction(convertFromTextDate(dateAsString), libele,
+            // extractSolde(debitAsString), extractSolde(credititAsString));
+            // getTransactions().add(lTransaction);
+            // logger.debug("Added new transaction : " + lTransaction.toString());
+
             // logger.debug("End of <" + getTransactions().size() + "> transactions
             // fetching");
         }
-        return rows;
+        return result;
     }
 
     /**
