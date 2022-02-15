@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.adriens.github.colisnc</groupId>
     <artifactId>ColisNcSDK</artifactId>
-    <version>1.18.4-SNAPSHOT</version>
+    <version>1.18.3-SNAPSHOT</version>
     <packaging>jar</packaging>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -19,7 +19,7 @@
         <maven-jar-plugin.version>3.2.2</maven-jar-plugin.version>
 
         <!-- dépendance JAXB -->
-        <jaxb-core.version>3.0.2</jaxb-core.version>
+        <jaxb-core.version>3.0.1</jaxb-core.version>
         <jaxb-impl.version>3.0.2</jaxb-impl.version>
 
         <!-- dépendance jacoco -->
@@ -49,12 +49,12 @@
         <dependency>
             <groupId>jakarta.xml.bind</groupId>
             <artifactId>jakarta.xml.bind-api</artifactId>
-            <version>3.0.0</version>
+            <version>${jaxb-core.version}</version>
         </dependency>
         <dependency>
             <groupId>com.sun.xml.bind</groupId>
             <artifactId>jaxb-impl</artifactId>
-            <version>3.0.0</version>
+            <version>${jaxb-impl.version}</version>
             <scope>runtime</scope>
         </dependency>
 
