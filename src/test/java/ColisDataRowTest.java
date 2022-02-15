@@ -4,13 +4,15 @@
  * and open the template in the editor.
  */
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+
+import java.time.LocalDateTime;
+
 import com.adriens.github.colisnc.colisnc.ColisDataRow;
 import com.adriens.github.colisnc.countries.Country;
 import com.adriens.github.colisnc.localisation.Localisation;
 
-import java.time.LocalDateTime;
-
-import static org.junit.Assert.*;
 import org.junit.Test;
 
 /**
@@ -25,8 +27,7 @@ public class ColisDataRowTest {
         try {
             
             ColisDataRow instance = new ColisDataRow();
-            Localisation localisation = new Localisation();
-            localisation.setName("NOUMEA-TEST");
+            Localisation localisation = new Localisation("NOUMEA-TEST",null,null);
             instance.setLocalization(localisation);
             assertEquals("localisation name set to \"NOUMEA-TEST\"", instance.getLocalization(), localisation);
             

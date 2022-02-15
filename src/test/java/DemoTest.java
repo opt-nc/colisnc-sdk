@@ -12,10 +12,6 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
-
 import com.adriens.github.colisnc.colisnc.ColisCrawler;
 import com.adriens.github.colisnc.colisnc.ColisDataRow;
 import com.adriens.github.colisnc.countries.Country;
@@ -23,7 +19,6 @@ import com.adriens.github.colisnc.countries.ListCountriesDefinedLanguage;
 import com.adriens.github.colisnc.localisation.Localisation;
 import com.adriens.github.colisnc.localisation.Localisations;
 
-import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 
 /**
@@ -36,38 +31,21 @@ public class DemoTest {
     
     @Test
     public void demoLocalisations() {
+        assertTrue("there must be at least 10 localisation", Localisations.getLocalisations().size() > 10);
 
-        try {
-            JAXBContext jaxbContext = JAXBContext.newInstance(Localisations.class);
-            Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-
-            assertNotNull("JAXBContext is not null", jaxbContext);
-            assertNotNull("Unmarshaller is not null", jaxbUnmarshaller);
-
-            //We had written this file in marshalling example
-            Localisations parts = (Localisations) jaxbUnmarshaller.unmarshal(Localisations.class.getResourceAsStream("/localisations.xml"));
-
-            assertTrue("there must be at least 10 localisation", parts.getLocalisations().size() > 10);
-
-            for (Localisation part : parts.getLocalisations()) {
-                System.out.println(part.getName());
-                System.out.println(part.getUrl());
-                System.out.println("-------------------------------------------------");
-            }
-
-            System.out.println("######################################################");
-
-            String aLocalisation = "NOUMEA-CTP";
-            Localisation local = new Localisation();
-
-            local = Localisations.locate(aLocalisation);
-            System.out.println(local);
-
-            assertNotNull("we must find a city", local);
-
-        } catch (JAXBException ex) {
-            System.err.println("impossible to manage xml : " + ex.getMessage());
+        for (Localisation part : Localisations.getLocalisations()) {
+            System.out.println(part.getName());
+            System.out.println(part.getUrl());
+            System.out.println("-------------------------------------------------");
         }
+
+        System.out.println("######################################################");
+
+        String aLocalisation = "NOUMEA-CTP";
+        Localisation local = Localisations.locate(aLocalisation);
+        System.out.println(local);
+
+        assertNotNull("we must find a city", local);
     }
     
     @Test
@@ -75,10 +53,8 @@ public class DemoTest {
         
         try {
             
-            String aCountryName = "ÉTATS-UNIS";
-            String lowerCountryName = StringUtils.stripAccents(aCountryName.toLowerCase());  
-            Country theCountry = ListCountriesDefinedLanguage.getCountry(aCountryName);
-            assertEquals("", lowerCountryName, theCountry.getName());
+            Country theCountry = ListCountriesDefinedLanguage.getCountry("etats-unis");
+            assertEquals("etats-unis", theCountry.getName());
             
             System.out.println("find:\n" + theCountry);
             

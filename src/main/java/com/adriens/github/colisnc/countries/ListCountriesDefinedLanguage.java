@@ -5,25 +5,30 @@
  */
 package com.adriens.github.colisnc.countries;
 
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
-import org.apache.commons.lang3.StringUtils;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * @author 3004SAL
- * <br>
- * <p>
- * <code><b>ListCountriesDefinedLanguage</b></code> is the class representing the list of all
- * countries in french.
- * </p>
- * <u>example:</u>
- * <pre> {@code
+ *         <br>
+ *         <p>
+ *         <code><b>ListCountriesDefinedLanguage</b></code> is the class
+ *         representing the list of all
+ *         countries in french.
+ *         </p>
+ *         <u>example:</u>
+ * 
+ *         <pre>
+ *  {@code
  * public void main(String... args) {
  *
  *      // Create a collection of all available countries
@@ -32,7 +37,7 @@ import org.slf4j.LoggerFactory;
  *      System.exit(0);
  *  }
  * }
- * </pre>
+ *         </pre>
  *
  */
 public class ListCountriesDefinedLanguage {
@@ -55,7 +60,7 @@ public class ListCountriesDefinedLanguage {
             String iso = locale.getISO3Country();
             String code = locale.getCountry();
             String name = locale.getDisplayCountry(Locale.FRANCE).toLowerCase();
-            name = StringUtils.stripAccents(name);
+            name = normalize(name);
 
             countries.add(new Country(iso, code, name));
         }
@@ -86,8 +91,14 @@ public class ListCountriesDefinedLanguage {
             return out;
         }
 
-        Map<String, Country> cMap = getCountries().stream().collect(Collectors.toMap(Country::getName, country -> country));
-        out = cMap.get(StringUtils.stripAccents(aCountryName.toLowerCase()));
+        Map<String, Country> cMap = getCountries().stream()
+                .collect(Collectors.toMap(Country::getName, Function.identity()));
+        out = cMap.get(normalize(aCountryName));
         return out;
+    }
+
+    private static String normalize(String text) {
+        return Normalizer.normalize(text.toLowerCase(), Normalizer.Form.NFD)
+                .replaceAll("[\\p{InCombiningDiacriticalMarks}]", "");
     }
 }

@@ -14,10 +14,9 @@ import java.util.List;
 
 import com.adriens.github.colisnc.colisnc.ColisCrawler;
 import com.adriens.github.colisnc.colisnc.ColisDataRow;
-import com.gargoylesoftware.htmlunit.BrowserVersion;
-import com.gargoylesoftware.htmlunit.WebClient;
-import com.gargoylesoftware.htmlunit.html.HtmlPage;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 import org.junit.Test;
 
 /**
@@ -30,12 +29,8 @@ public class ColisCrawlerTest {
     @Test
     public void testSiteIsAlive() {
         try {
-            WebClient webClient = new WebClient(BrowserVersion.BEST_SUPPORTED);
-            webClient.getOptions().setJavaScriptEnabled(false);
-            webClient.getOptions().setDownloadImages(false);
-            HtmlPage thePage = webClient.getPage(ColisCrawler.BASE_URL);
-            
-            assertTrue("You can access the page ", thePage.asNormalizedText().contains("Suivi de Votre Envoi"));
+            Document doc = Jsoup.connect(ColisCrawler.BASE_URL).get();
+            assertTrue("You can access the page ", doc.text().contains("Suivi de Votre Envoi"));
             
         } catch (Exception ex) {
             
