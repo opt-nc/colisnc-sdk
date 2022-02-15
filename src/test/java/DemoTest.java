@@ -12,6 +12,10 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
+
 import com.adriens.github.colisnc.colisnc.ColisCrawler;
 import com.adriens.github.colisnc.colisnc.ColisDataRow;
 import com.adriens.github.colisnc.countries.Country;
@@ -21,10 +25,6 @@ import com.adriens.github.colisnc.localisation.Localisations;
 
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
-
-import jakarta.xml.bind.JAXBContext;
-import jakarta.xml.bind.JAXBException;
-import jakarta.xml.bind.Unmarshaller;
 
 /**
  * 
