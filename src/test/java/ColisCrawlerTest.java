@@ -12,12 +12,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import com.adriens.github.colisnc.colisnc.ColisCrawler;
-import com.adriens.github.colisnc.colisnc.ColisDataRow;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.junit.Test;
+
+import com.adriens.github.colisnc.colisnc.ColisCrawler;
+import com.adriens.github.colisnc.colisnc.ColisDataRow;
 
 /**
  *
@@ -128,7 +128,7 @@ public class ColisCrawlerTest {
 
             String itemId = "8Z00136833343";
             List<ColisDataRow> colisList = ColisCrawler.getColisRows(itemId);
-            assertTrue("on itemId \"8Z00136833343\", there're 7 rows", colisList.size() == 8);
+            assertEquals("on itemId \"8Z00136833343\", there're 7 rows", 9, colisList.size());
 
         } catch (Exception ex) {
             
