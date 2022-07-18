@@ -64,7 +64,7 @@ public class ColisDataRow {
      COLIS_EN_COURS_ACHEMINEMENT,
      COLIS_EN_COURS_DEDOUANEMENT,
      COLIS_ARRIVE_PAYS_DESTINATION,
-     COLIS_PRET_A_QUITTE_PAYS_ORIGINE,
+     COLIS_PRET_A_QUITTER_SON_PAYS_ORIGINE,
      COLIS_A_QUITTE_PAYS_ORIGINE,
      COLIS_PRIS_EN_CHARGE,
      COLIS_NULL_STATUS,
@@ -102,7 +102,7 @@ public class ColisDataRow {
             return Status.COLIS_ARRIVE_PAYS_DESTINATION;
         }
         else if(aTypeEvenement.contains("prêt à quitter son pays d'origine")){
-            return Status.COLIS_PRET_A_QUITTE_PAYS_ORIGINE;
+            return Status.COLIS_PRET_A_QUITTER_SON_PAYS_ORIGINE;
         }
         else if(aTypeEvenement.contains("quitté le pays d'origine")){
             return Status.COLIS_A_QUITTE_PAYS_ORIGINE;
