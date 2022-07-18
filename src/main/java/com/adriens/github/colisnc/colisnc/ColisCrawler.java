@@ -12,16 +12,17 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import com.adriens.github.colisnc.countries.ListCountriesDefinedLanguage;
-import com.adriens.github.colisnc.localisation.Localisation;
-import com.adriens.github.colisnc.localisation.Localisations;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.adriens.github.colisnc.countries.Country;
+import com.adriens.github.colisnc.countries.ListCountriesDefinedLanguage;
+import com.adriens.github.colisnc.localisation.Localisation;
+import com.adriens.github.colisnc.localisation.Localisations;
 
 /**
  *
@@ -156,7 +157,13 @@ public class ColisCrawler {
             colisRow.setInformations(informations);
             colisRow.setDate(localDateTime);
             colisRow.setStatus();
+
+            Country country = ListCountriesDefinedLanguage.getCountry(pays);
+            if (country == null) {
+                logger.warn("Code pays introuvable : {}", pays);
+            }
             colisRow.setCountry(ListCountriesDefinedLanguage.getCountry(pays));
+            
             colisRow.setLocalization(geolocalized);
             result.add(colisRow);
 
