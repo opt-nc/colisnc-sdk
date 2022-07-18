@@ -75,7 +75,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>com.adriens.github.colisnc.colisnc.ColisCrawler.Main</mainClass>
+                            <mainClass>com.adriens.github.colisnc.colisnc.ColisCrawler</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
