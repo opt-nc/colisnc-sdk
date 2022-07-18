@@ -5,11 +5,13 @@
  */
 package com.adriens.github.colisnc.colisnc;
 
-import com.adriens.github.colisnc.countries.Country;
-import com.adriens.github.colisnc.localisation.Localisation;
 import java.time.LocalDateTime;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.adriens.github.colisnc.countries.Country;
+import com.adriens.github.colisnc.localisation.Localisation;
 
 /**
  *
@@ -55,12 +57,14 @@ public class ColisDataRow {
         this.localization = localization;
     }
     
-    final static Logger logger = LoggerFactory.getLogger(ColisDataRow.class);
-    enum Status {
+    static final Logger logger = LoggerFactory.getLogger(ColisDataRow.class);
+
+    public enum Status {
      COLIS_LIVRE,
      COLIS_EN_COURS_ACHEMINEMENT,
      COLIS_EN_COURS_DEDOUANEMENT,
      COLIS_ARRIVE_PAYS_DESTINATION,
+     COLIS_PRET_A_QUITTE_PAYS_ORIGINE,
      COLIS_A_QUITTE_PAYS_ORIGINE,
      COLIS_PRIS_EN_CHARGE,
      COLIS_NULL_STATUS,
@@ -85,7 +89,6 @@ public class ColisDataRow {
         }
         
         // now test
-        aTypeEvenement.replace("Votre courrier/colis", "");
         if (aTypeEvenement.contains("a été livré")){
             return Status.COLIS_LIVRE;
         }
@@ -97,6 +100,9 @@ public class ColisDataRow {
         }
         else if(aTypeEvenement.contains("arrivé dans le pays de destination")){
             return Status.COLIS_ARRIVE_PAYS_DESTINATION;
+        }
+        else if(aTypeEvenement.contains("prêt à quitter son pays d'origine")){
+            return Status.COLIS_PRET_A_QUITTE_PAYS_ORIGINE;
         }
         else if(aTypeEvenement.contains("quitté le pays d'origine")){
             return Status.COLIS_A_QUITTE_PAYS_ORIGINE;
