@@ -308,7 +308,7 @@ public class ColisCrawlerTest {
         assertEquals("", rows.get(5).getLocalization().getUrl());
         assertEquals("Slovénie", rows.get(5).getPays());
         assertEquals("09/08/2019 08:29:00", rows.get(5).getRawDateHeure());
-        assertEquals(Status.COLIS_PRET_A_QUITTE_PAYS_ORIGINE, rows.get(5).getStatus());
+        assertEquals(Status.COLIS_PRET_A_QUITTER_SON_PAYS_ORIGINE, rows.get(5).getStatus());
         assertEquals("Votre courrier/colis est prêt à quitter son pays d'origine.", rows.get(5).getTypeEvenement());
 
         assertEquals("SI", rows.get(6).getCountry().getCode());
