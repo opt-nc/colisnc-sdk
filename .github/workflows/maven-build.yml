@@ -43,7 +43,7 @@ jobs:
       - name: Install NodeJS
         uses: actions/setup-node@v3
         with:
-          node-version: 14.x
+          node-version: 18.x
       - name: Install Semantic release and maven-semantic-release plugin
         run: |
           npm install -g semantic-release \
