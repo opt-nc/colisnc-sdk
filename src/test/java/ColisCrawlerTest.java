@@ -108,7 +108,7 @@ public class ColisCrawlerTest {
         try {
             String itemId = "8Z00136833343";
             List<ColisDataRow> colisList = ColisCrawler.getColisRows(itemId);
-            assertEquals("on itemId \"8Z00136833343\", there're 7 rows", 9, colisList.size());
+            assertEquals("on itemId \"8Z00136833343\", there're 10 rows", 10, colisList.size());
         } catch (Exception ex) {
             assertEquals("No exception", 0, ex.getMessage().length());
         }
@@ -221,7 +221,7 @@ public class ColisCrawlerTest {
     public void testUnPeuPlusCouvrant() throws Exception {
         List<ColisDataRow> rows = ColisCrawler.getColisRows("CA107308006SI");
 
-        assertEquals(7, rows.size());
+        assertEquals(8, rows.size());
 
         assertEquals("NC", rows.get(0).getCountry().getCode());
         assertEquals("NCL", rows.get(0).getCountry().getIso());
@@ -236,27 +236,27 @@ public class ColisCrawlerTest {
         assertEquals("Nouvelle-Calédonie", rows.get(0).getPays());
         assertEquals("09/09/2019 09:41:12", rows.get(0).getRawDateHeure());
         assertEquals(Status.COLIS_LIVRE, rows.get(0).getStatus());
-        assertEquals("Votre courrier/colis a été livré", rows.get(0).getTypeEvenement());
+        assertEquals("Votre courrier / colis a été livré.", rows.get(0).getTypeEvenement());
 
         assertEquals("NC", rows.get(1).getCountry().getCode());
         assertEquals("NCL", rows.get(1).getCountry().getIso());
         assertEquals("nouvelle-caledonie", rows.get(1).getCountry().getName());
-        assertEquals(LocalDateTime.parse("2019-09-06T15:38:04"), rows.get(1).getDate());
+        assertEquals(LocalDateTime.parse("2019-09-09T09:40:44"), rows.get(1).getDate());
         assertEquals("", rows.get(1).getInformations());
         assertEquals("CA107308006SI", rows.get(1).getItemId());
-        assertEquals("NOUMEA-CTP", rows.get(1).getLocalisation());
+        assertEquals("NOUMEA CDC", rows.get(1).getLocalisation());
         assertEquals("", rows.get(1).getLocalization().getLongName());
         assertEquals("", rows.get(1).getLocalization().getName());
         assertEquals("", rows.get(1).getLocalization().getUrl());
         assertEquals("Nouvelle-Calédonie", rows.get(1).getPays());
-        assertEquals("06/09/2019 15:38:04", rows.get(1).getRawDateHeure());
-        assertEquals(Status.COLIS_EN_COURS_ACHEMINEMENT, rows.get(1).getStatus());
-        assertEquals("Votre courrier/colis est en cours d'acheminement.", rows.get(1).getTypeEvenement());
+        assertEquals("09/09/2019 09:40:44", rows.get(1).getRawDateHeure());
+        assertEquals("Votre courrier / colis est en cours de traitement.", rows.get(1).getTypeEvenement());
+        assertEquals(Status.COLIS_EN_COURS_TRAITEMENT, rows.get(1).getStatus());
 
         assertEquals("NC", rows.get(2).getCountry().getCode());
         assertEquals("NCL", rows.get(2).getCountry().getIso());
         assertEquals("nouvelle-caledonie", rows.get(2).getCountry().getName());
-        assertEquals(LocalDateTime.parse("2019-09-06T10:43:27"), rows.get(2).getDate());
+        assertEquals(LocalDateTime.parse("2019-09-06T15:38:04"), rows.get(2).getDate());
         assertEquals("", rows.get(2).getInformations());
         assertEquals("CA107308006SI", rows.get(2).getItemId());
         assertEquals("NOUMEA-CTP", rows.get(2).getLocalisation());
@@ -264,9 +264,9 @@ public class ColisCrawlerTest {
         assertEquals("", rows.get(2).getLocalization().getName());
         assertEquals("", rows.get(2).getLocalization().getUrl());
         assertEquals("Nouvelle-Calédonie", rows.get(2).getPays());
-        assertEquals("06/09/2019 10:43:27", rows.get(2).getRawDateHeure());
-        assertEquals(Status.COLIS_EN_COURS_DEDOUANEMENT, rows.get(2).getStatus());
-        assertEquals("Votre courrier/colis est en cours de dédouanement", rows.get(2).getTypeEvenement());
+        assertEquals("06/09/2019 15:38:04", rows.get(2).getRawDateHeure());
+        assertEquals("Votre courrier / colis est en cours d acheminement.", rows.get(2).getTypeEvenement());
+        assertEquals(Status.COLIS_EN_COURS_ACHEMINEMENT, rows.get(2).getStatus());
 
         assertEquals("NC", rows.get(3).getCountry().getCode());
         assertEquals("NCL", rows.get(3).getCountry().getIso());
@@ -280,48 +280,63 @@ public class ColisCrawlerTest {
         assertEquals("", rows.get(3).getLocalization().getUrl());
         assertEquals("Nouvelle-Calédonie", rows.get(3).getPays());
         assertEquals("06/09/2019 10:43:27", rows.get(3).getRawDateHeure());
-        assertEquals(Status.COLIS_ARRIVE_PAYS_DESTINATION, rows.get(3).getStatus());
-        assertEquals("Votre courrier/colis est arrivé dans le pays de destination", rows.get(3).getTypeEvenement());
+        assertEquals(Status.COLIS_EN_COURS_DEDOUANEMENT, rows.get(3).getStatus());
+        assertEquals("Votre courrier / colis est en cours de dédouanement.", rows.get(3).getTypeEvenement());
 
-        assertEquals("FR", rows.get(4).getCountry().getCode());
-        assertEquals("FRA", rows.get(4).getCountry().getIso());
-        assertEquals("france", rows.get(4).getCountry().getName());
-        assertEquals(LocalDateTime.parse("2019-08-20T00:00:00"), rows.get(4).getDate());
+        assertEquals("NC", rows.get(4).getCountry().getCode());
+        assertEquals("NCL", rows.get(4).getCountry().getIso());
+        assertEquals("nouvelle-caledonie", rows.get(4).getCountry().getName());
+        assertEquals(LocalDateTime.parse("2019-09-06T10:43:27"), rows.get(4).getDate());
         assertEquals("", rows.get(4).getInformations());
         assertEquals("CA107308006SI", rows.get(4).getItemId());
-        assertEquals("FRANCE CHILLY MAZARIN", rows.get(4).getLocalisation());
-        assertNull(rows.get(4).getLocalization());
-        assertEquals("France", rows.get(4).getPays());
-        assertEquals("20/08/2019 00:00:00", rows.get(4).getRawDateHeure());
-        assertEquals(Status.COLIS_A_QUITTE_PAYS_ORIGINE, rows.get(4).getStatus());
-        assertEquals("Votre courrier/colis a quitté le pays d'origine.", rows.get(4).getTypeEvenement());
+        assertEquals("NOUMEA-CTP", rows.get(4).getLocalisation());
+        assertEquals("", rows.get(4).getLocalization().getLongName());
+        assertEquals("", rows.get(4).getLocalization().getName());
+        assertEquals("", rows.get(4).getLocalization().getUrl());
+        assertEquals("Nouvelle-Calédonie", rows.get(4).getPays());
+        assertEquals("06/09/2019 10:43:27", rows.get(4).getRawDateHeure());
+        assertEquals(Status.COLIS_ARRIVE_PAYS_DESTINATION, rows.get(4).getStatus());
+        assertEquals("Votre courrier / colis est arrivé dans le pays de destination.", rows.get(4).getTypeEvenement());
 
-        assertEquals("SI", rows.get(5).getCountry().getCode());
-        assertEquals("SVN", rows.get(5).getCountry().getIso());
-        assertEquals("slovenie", rows.get(5).getCountry().getName());
-        assertEquals(LocalDateTime.parse("2019-08-09T08:29:00"), rows.get(5).getDate());
+        assertEquals("FR", rows.get(5).getCountry().getCode());
+        assertEquals("FRA", rows.get(5).getCountry().getIso());
+        assertEquals("france", rows.get(5).getCountry().getName());
+        assertEquals(LocalDateTime.parse("2019-08-20T00:00:00"), rows.get(5).getDate());
         assertEquals("", rows.get(5).getInformations());
         assertEquals("CA107308006SI", rows.get(5).getItemId());
-        assertEquals("LJUBLJANA 1003", rows.get(5).getLocalisation());
-        assertEquals("", rows.get(5).getLocalization().getLongName());
-        assertEquals("", rows.get(5).getLocalization().getName());
-        assertEquals("", rows.get(5).getLocalization().getUrl());
-        assertEquals("Slovénie", rows.get(5).getPays());
-        assertEquals("09/08/2019 08:29:00", rows.get(5).getRawDateHeure());
-        assertEquals(Status.COLIS_PRET_A_QUITTER_SON_PAYS_ORIGINE, rows.get(5).getStatus());
-        assertEquals("Votre courrier/colis est prêt à quitter son pays d'origine.", rows.get(5).getTypeEvenement());
+        assertEquals("FRANCE CHILLY MAZARIN", rows.get(5).getLocalisation());
+        assertNull(rows.get(5).getLocalization());
+        assertEquals("France", rows.get(5).getPays());
+        assertEquals("20/08/2019 00:00:00", rows.get(5).getRawDateHeure());
+        assertEquals(Status.COLIS_A_QUITTE_LE_PAYS, rows.get(5).getStatus());
+        assertEquals("Votre courrier / colis a quitté le pays.", rows.get(5).getTypeEvenement());
 
         assertEquals("SI", rows.get(6).getCountry().getCode());
         assertEquals("SVN", rows.get(6).getCountry().getIso());
         assertEquals("slovenie", rows.get(6).getCountry().getName());
-        assertEquals(LocalDateTime.parse("2019-08-06T09:37:00"), rows.get(6).getDate());
+        assertEquals(LocalDateTime.parse("2019-08-09T08:29:00"), rows.get(6).getDate());
         assertEquals("", rows.get(6).getInformations());
         assertEquals("CA107308006SI", rows.get(6).getItemId());
-        assertEquals("2116", rows.get(6).getLocalisation());
-        assertNull(rows.get(6).getLocalization());
+        assertEquals("LJUBLJANA 1003", rows.get(6).getLocalisation());
+        assertEquals("", rows.get(6).getLocalization().getLongName());
+        assertEquals("", rows.get(6).getLocalization().getName());
+        assertEquals("", rows.get(6).getLocalization().getUrl());
         assertEquals("Slovénie", rows.get(6).getPays());
-        assertEquals("06/08/2019 09:37:00", rows.get(6).getRawDateHeure());
-        assertEquals(Status.COLIS_PRIS_EN_CHARGE, rows.get(6).getStatus());
-        assertEquals("Votre courrier/colis a été pris en charge", rows.get(6).getTypeEvenement());
+        assertEquals("09/08/2019 08:29:00", rows.get(6).getRawDateHeure());
+        assertEquals(Status.COLIS_PRET_A_QUITTER_LE_PAYS, rows.get(6).getStatus());
+        assertEquals("Votre courrier / colis est prêt à quitter le pays.", rows.get(6).getTypeEvenement());
+
+        assertEquals("SI", rows.get(7).getCountry().getCode());
+        assertEquals("SVN", rows.get(7).getCountry().getIso());
+        assertEquals("slovenie", rows.get(7).getCountry().getName());
+        assertEquals(LocalDateTime.parse("2019-08-06T09:37:00"), rows.get(7).getDate());
+        assertEquals("", rows.get(7).getInformations());
+        assertEquals("CA107308006SI", rows.get(7).getItemId());
+        assertEquals("2116", rows.get(7).getLocalisation());
+        assertNull(rows.get(7).getLocalization());
+        assertEquals("Slovénie", rows.get(7).getPays());
+        assertEquals("06/08/2019 09:37:00", rows.get(7).getRawDateHeure());
+        assertEquals(Status.COLIS_PRIS_EN_CHARGE, rows.get(7).getStatus());
+        assertEquals("Votre courrier / colis a été pris en charge.", rows.get(7).getTypeEvenement());
     }
 }

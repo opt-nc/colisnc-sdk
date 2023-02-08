@@ -61,11 +61,12 @@ public class ColisDataRow {
 
     public enum Status {
      COLIS_LIVRE,
+     COLIS_EN_COURS_TRAITEMENT,
      COLIS_EN_COURS_ACHEMINEMENT,
      COLIS_EN_COURS_DEDOUANEMENT,
      COLIS_ARRIVE_PAYS_DESTINATION,
-     COLIS_PRET_A_QUITTER_SON_PAYS_ORIGINE,
-     COLIS_A_QUITTE_PAYS_ORIGINE,
+     COLIS_PRET_A_QUITTER_LE_PAYS,
+     COLIS_A_QUITTE_LE_PAYS,
      COLIS_PRIS_EN_CHARGE,
      COLIS_NULL_STATUS,
      COLIS_PAS_PU_ETRE_LIVRE,
@@ -92,7 +93,10 @@ public class ColisDataRow {
         if (aTypeEvenement.contains("a été livré")){
             return Status.COLIS_LIVRE;
         }
-        else if(aTypeEvenement.contains("en cours d'acheminement")){
+        else if(aTypeEvenement.contains("en cours de traitement")){ 
+            return Status.COLIS_EN_COURS_TRAITEMENT;
+        }
+        else if(aTypeEvenement.contains("en cours d'acheminement") || aTypeEvenement.contains("en cours d acheminement")){ 
             return Status.COLIS_EN_COURS_ACHEMINEMENT;
         }
         else if(aTypeEvenement.contains("en cours de dédouanement")){
@@ -101,11 +105,11 @@ public class ColisDataRow {
         else if(aTypeEvenement.contains("arrivé dans le pays de destination")){
             return Status.COLIS_ARRIVE_PAYS_DESTINATION;
         }
-        else if(aTypeEvenement.contains("prêt à quitter son pays d'origine")){
-            return Status.COLIS_PRET_A_QUITTER_SON_PAYS_ORIGINE;
+        else if(aTypeEvenement.contains("prêt à quitter le pays")){
+            return Status.COLIS_PRET_A_QUITTER_LE_PAYS;
         }
-        else if(aTypeEvenement.contains("quitté le pays d'origine")){
-            return Status.COLIS_A_QUITTE_PAYS_ORIGINE;
+        else if(aTypeEvenement.contains("quitté le pays")){
+            return Status.COLIS_A_QUITTE_LE_PAYS;
         }
         else if(aTypeEvenement.contains("a été pris en charge")){
             return Status.COLIS_PRIS_EN_CHARGE;

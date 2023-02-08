@@ -10,12 +10,12 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.source>1.8</maven.compiler.source>
 
-        <slf4j.version>2.0.3</slf4j.version>
+        <slf4j.version>2.0.6</slf4j.version>
         <jsoup.version>1.15.3</jsoup.version>
         <junit.version>4.13.2</junit.version>
 
         <!-- Plugins versions -->
-        <maven-shade-plugin.version>3.4.0</maven-shade-plugin.version>
+        <maven-shade-plugin.version>3.4.1</maven-shade-plugin.version>
         <maven-jar-plugin.version>3.3.0</maven-jar-plugin.version>
         <jacoco-maven-plugin.version>0.8.8</jacoco-maven-plugin.version>
     </properties>
