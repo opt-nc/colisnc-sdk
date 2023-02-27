@@ -324,7 +324,7 @@ public class ColisCrawlerTest {
         assertEquals("Slovénie", rows.get(6).getPays());
         assertEquals("09/08/2019 08:29:00", rows.get(6).getRawDateHeure());
         assertEquals(Status.COLIS_PRET_A_QUITTER_LE_PAYS, rows.get(6).getStatus());
-        assertEquals("Votre courrier / colis est prêt à quitter le pays.", rows.get(6).getTypeEvenement());
+        assertEquals("Votre courrier / colis est prêt à quitter le pays. Il est progra", rows.get(6).getTypeEvenement());
 
         assertEquals("SI", rows.get(7).getCountry().getCode());
         assertEquals("SVN", rows.get(7).getCountry().getIso());
