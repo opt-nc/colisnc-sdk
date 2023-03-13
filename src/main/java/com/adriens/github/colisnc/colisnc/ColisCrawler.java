@@ -5,6 +5,8 @@
  */
 package com.adriens.github.colisnc.colisnc;
 
+import java.net.InetSocketAddress;
+import java.net.Proxy;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -122,8 +124,17 @@ public class ColisCrawler {
             return Collections.emptyList();
         }
 
-        Document doc = Jsoup.connect(ColisCrawler.BASE_URL + ColisCrawler.QUERY + itemId + "&Submit=Nouvelle+recherche")
-                .get();
+        Document doc;
+        Proxy proxy = getProxy();
+        if(proxy != null) {
+            doc = Jsoup.connect(ColisCrawler.BASE_URL + ColisCrawler.QUERY + itemId + "&Submit=Nouvelle+recherche")
+                    .proxy(proxy)
+                    .get();
+        } else {
+            doc = Jsoup.connect(ColisCrawler.BASE_URL + ColisCrawler.QUERY + itemId + "&Submit=Nouvelle+recherche")
+                    .get();
+        }
+
         if (doc.text().contains(NO_ROWS_MESSAGE)) {
             logger.warn("Le colis demandé <{}> est introuvable...", itemId);
             return Collections.emptyList();
@@ -245,6 +256,27 @@ public class ColisCrawler {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+    }
+
+
+    private static Proxy getProxy(){
+
+        String httpHost = System.getProperty("http.proxyHost");
+        String httpPort = System.getProperty("http.proxyPort");
+        String httpsHost = System.getProperty("https.proxyHost");
+        String httpsPort = System.getProperty("https.proxyPort");
+
+        boolean httpsProxySet = httpsHost != null  && httpsPort != null;
+        boolean httpProxySet = httpHost != null  && httpPort != null;
+
+        Proxy proxy = null;
+        if(httpProxySet || httpsProxySet) {
+            logger.info((httpsProxySet ? "HTTPS" : "HTTP") + " proxy configuration detected. Set it.");
+            proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(httpsProxySet ? httpsHost : httpHost,
+                    httpsProxySet ? Integer.valueOf(httpsPort): Integer.valueOf(httpPort)));
+        }
+
+        return proxy;
     }
 
 }
