@@ -1,4 +1,5 @@
 /target/
 /nbproject/
 dependency-reduced-pom.xml
-.vscode/
+.vscode/.idea
+.idea/
