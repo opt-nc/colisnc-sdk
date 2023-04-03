@@ -17,7 +17,7 @@
         <!-- Plugins versions -->
         <maven-shade-plugin.version>3.4.1</maven-shade-plugin.version>
         <maven-jar-plugin.version>3.3.0</maven-jar-plugin.version>
-        <jacoco-maven-plugin.version>0.8.8</jacoco-maven-plugin.version>
+        <jacoco-maven-plugin.version>0.8.9</jacoco-maven-plugin.version>
     </properties>
 
     <dependencies>
