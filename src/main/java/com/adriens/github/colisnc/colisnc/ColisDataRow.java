@@ -105,7 +105,7 @@ public class ColisDataRow {
         else if(aTypeEvenement.contains("arrivé dans le pays de destination")){
             return Status.COLIS_ARRIVE_PAYS_DESTINATION;
         }
-        else if(aTypeEvenement.contains("prêt à quitter le pays")){
+        else if(aTypeEvenement.contains("prêt à quitter le pays") || aTypeEvenement.contains("prendra le prochain départ international")){
             return Status.COLIS_PRET_A_QUITTER_LE_PAYS;
         }
         else if(aTypeEvenement.contains("quitté le pays")){
