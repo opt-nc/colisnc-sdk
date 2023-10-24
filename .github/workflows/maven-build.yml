@@ -41,7 +41,7 @@ jobs:
           distribution: 'adopt'
           cache: 'maven'
       - name: Install NodeJS
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 18.x
       - name: Install Semantic release and maven-semantic-release plugin
